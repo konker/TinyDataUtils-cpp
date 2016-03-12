@@ -1,0 +1,42 @@
+apply plugin: 'cpp'
+
+model {
+    toolChains {
+        gcc(Gcc) {
+            target("arm"){
+                cppCompiler.withArguments { args ->
+                    args << "-m32"
+                }
+                linker.withArguments { args ->
+                    args << "-m32"
+                }
+            }
+        }
+    }
+    platforms {
+        arm {
+            architecture "arm"
+        }
+    }
+    components {
+        DataUtils(NativeLibrarySpec) {
+            targetPlatform "arm"
+
+            sources {
+                cpp {
+                    source {
+                        srcDir "src"
+                        include "**/*.cpp"
+                    }
+                    exportedHeaders {
+                        srcDir "include"
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
